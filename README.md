@@ -43,3 +43,6 @@ fetch_and_cache(data_url, file, data_dir, force): Downloads and caches a url and
 line_-count(file): Returns the number of linesi n a file
 run_linear_regression_test(final_model, process_data_fm, threshold, train_data_path, test_data_path, is_test, is_ranking, return_predictions): Tests whether a linear regression model has a loss lower than a threshold
 run_linear_regression_test_optim(final_model, process_data_fm. threshold, train_data_path, test_data_path, is_test, is_ranking, return_predictions): Tests the accuracy of a linear model
+
+## Best Model
+This contains our best performing model for use when making a prediction based on the values entered on the website.
