@@ -4,6 +4,100 @@ Helper Functions
 import pandas as pd
 import numpy as np
 from joblib import dump
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import OneHotEncoder
+
+def fill_missing(data, col):
+    copy = data.copy()
+    copy[col] = copy[col].fillna(np.median(copy[col]))
+    return copy
+
+def rmse(predicted, actual):
+        return np.sqrt(np.mean((actual - predicted)**2))
+
+
+def process_data_pipe(data, pipeline_functions, prediction_col):
+    for function, arguments, keyword_arguments in pipeline_functions:
+        if keyword_arguments and (not arguments):
+            data = data.pipe(function, **keyword_arguments)
+        elif (not keyword_arguments) and (arguments):
+            data = data.pipe(function, *arguments)
+        else:
+            data = data.pipe(function)
+    X = data.drop(columns = [prediction_col])
+    Y = data.loc[:, prediction_col]
+    return X, Y
+
+
+def select_columns(data, *columns):
+    return data.loc[:, columns]
+
+def train_val_split(data):
+    data_len = data.shape[0]
+    shuffled_indices = np.random.permutation(data_len)
+    train_indices = shuffled_indices[:int(data_len * 0.8)]
+    validation_indices = shuffled_indices[int(data_len * 0.8):]
+    train = data.iloc[train_indices]
+    validation = data.iloc[validation_indices]
+    return train, validation
+
+def ohe_roof_material(data):
+    cat = ['Roof Material']
+    oh_enc = OneHotEncoder()
+    oh_enc.fit(data[cat])
+
+    cat_data = oh_enc.transform(data[cat]).toarray()
+    cat_df = pd.DataFrame(data = cat_data, columns = oh_enc.get_feature_names_out(), index = data.index)
+    return data.join(cat_df)
+
+def substitute_roof_material(data):
+    copy = data.copy()
+    copy["Roof Material"] = copy['Roof Material'].map({1:"Shingle/Asphalt", 2:"Tar & Gravel", 3:"Slate", 4: "Shake", 5: "Tile", 6: "Other"})
+    return copy
+
+def add_bedrooms(data):
+    with_rooms = data.copy()
+    with_rooms['Bedrooms'] = with_rooms['Description'].str.extract(r'(\d+) of which are bedrooms,').astype(int).fillna(0)
+    return with_rooms
+
+def add_total_rooms(data):
+    with_rooms = data.copy()
+    with_rooms['Rooms'] = with_rooms['Description'].str.extract(r'It has a total of (\d+) rooms,').astype(int).fillna(0)
+    return with_rooms
+
+def add_bathrooms(data):
+    with_rooms = data.copy()
+    with_rooms['Bathrooms'] = with_rooms['Description'].str.extract(r'(\d+(?:\.\d+)?) of which are bathrooms.').astype(float).fillna(0)
+    return with_rooms
+
+def log_transform(data, col):
+    copy = data.copy()
+    copy['Log ' + col] = np.log(data[col] + 1)
+    return copy
+
+def remove_outliers(data, variable, lower = -np.inf, upper = np.inf):
+    # Remove outliers from data in column variable that are lower than lower and higher than upper
+    data = data[(data[variable] > lower) & (data[variable] <= upper)]
+    return data
+
+def plot_distribution(data, label, rows):
+    fig, axs = plt.subplots(nrows = rows)
+
+    sns.histplot(data[label], kde=True, ax=axs[0], stat = 'density', bins = 100)
+    sns.boxplot(x=data[label], width = 0.3, ax = axs[1], showfliers = False)
+
+    spacer = np.max(data[label]) * 0.05
+    xmin = np.min(data[label]) - spacer
+    xmax = np.max(data[label]) + spacer
+    axs[0].set_xlim((xmin, xmax))
+    axs[1].set_xlim((xmin, xmax))
+    axs[0].xaxis.set_visible(False)
+    axs[0].yaxis.set_visible(False)
+    axs[1].yaxis.set_visible(False)
+
+    plt.subplots_adjust(hspace = 0)
+    fig.suptitle("Distribution of " + label)
 
 def head(filename, lines=5):
     """
