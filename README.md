@@ -11,14 +11,14 @@ This file contains all the exploratory data analysis. The data is read in as a c
 ## Linear Regression Model
 This is the first and most basic of the models that we create in this project. We first create a basic model with only two features to test that the data pipeline works as we want it to, and that the model works. Afterwards we create two modesl - one including the Estimate (Land) and Estimate (Building) features, one without. The reason for this is because of the historic redlining. Estimate (Land) and Estimate (Building) were the estimation of the land cost and building cost in the previous year. If the previous year's pricing was biased, I don't want to bring that bias into my model. Thus I made the decision to exclude that feature when creating the final model, as well as in future models. The simplicity of a linear regression model allows it to be a good model for establishing a baseline. It is simple to implement and computationally cheap to provide a baseline performance measure to compare with more complex models.
 
-### Error Calculation
-In our models we use root mean squared error as our loss function. We chose RMSE over other loss functions such as mean squared error (MSE) or mean absolute error (MAE) because it in in the same metrics as the target variable, making it easier to interpret, and penalizes large errors more which leads to less extreme predictions.
-
 ## Random Forest Model
 This is a more complex model and achieves a higher accuracy than a linear model. It performs bootstrapping with our data to create multiple decision trees, and uses an ensemble to predict the housing prices. Again, we exclude Estimate (Land) and Estimate (Building) from our model. A random forest model can capture more complex, non-linear relationships, but requires more compute to create than a linear regression model. It can show some feature importances, but is still generally considered a black box model as the decision making process isn't as straightforward. This means that the model is a bit more difficult to explain.
 
 ## Model
-This is our final and most complex model. We implement a neural network with the same features used in the random forest model, but achieve a much higher accuray. This is the model that we employ in Website.ipynb. 
+This is our final and most complex model. We implement a neural network with the same features used in the random forest model, but achieve a much higher accuray. This is the model that we employ in Website.ipynb. Neural networks require the most compute out of all the implemented models, and due to it's power can often overfit when datasets are too small. This is also a black box model which could be a drawback when transparency is important.
+
+### Error Calculation
+In our models we use root mean squared error as our loss function. We chose RMSE over other loss functions such as mean squared error (MSE) or mean absolute error (MAE) because it in in the same metrics as the target variable, making it easier to interpret, and penalizes large errors more which leads to less extreme predictions.
 
 ## Website
 We use voila and ipywidgets in order to create a website where you can enter the features of a house and have the model predict the price your house could be.
