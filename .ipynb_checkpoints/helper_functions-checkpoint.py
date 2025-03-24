@@ -7,14 +7,18 @@ from joblib import dump
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import OneHotEncoder
+from tensorflow.keras import backend as K
 
+def nn_rmse(y_true, y_pred):
+    return K.sqrt(K.mean(K.square(y_pred - y_true)))
+    
 def fill_missing(data, col):
     copy = data.copy()
     copy[col] = copy[col].fillna(np.median(copy[col]))
     return copy
 
 def rmse(predicted, actual):
-        return np.sqrt(np.mean((actual - predicted)**2))
+    return np.sqrt(np.mean((actual - predicted)**2))
 
 
 def process_data_pipe(data, pipeline_functions, prediction_col):
