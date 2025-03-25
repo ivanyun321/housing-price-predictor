@@ -58,3 +58,6 @@ line_-count(file): Returns the number of linesi n a file
 run_linear_regression_test(final_model, process_data_fm, threshold, train_data_path, test_data_path, is_test, is_ranking, return_predictions): Tests whether a linear regression model has a loss lower than a threshold
 
 run_linear_regression_test_optim(final_model, process_data_fm. threshold, train_data_path, test_data_path, is_test, is_ranking, return_predictions): Tests the accuracy of a linear model
+
+## Website
+This is where you can input the information about your house and have the model predict a reasonable price for it. Be aware that this is just a ball park and the model is not perfect. 
