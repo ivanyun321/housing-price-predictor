@@ -20,9 +20,6 @@ This is our final and most complex model. We implement a neural network with the
 ### Error Calculation
 In our models we use root mean squared error as our loss function. We chose RMSE over other loss functions such as mean squared error (MSE) or mean absolute error (MAE) because it in in the same metrics as the target variable, making it easier to interpret, and penalizes large errors more which leads to less extreme predictions.
 
-## Website
-We use voila and ipywidgets in order to create a website where you can enter the features of a house and have the model predict the price your house could be.
-
 ## Helper Functions
 This is a python file that contains all the useful functions we use throughout the project.
 fill_missing(data, col): Fills in missing values in a column with the median value
@@ -43,6 +40,3 @@ fetch_and_cache(data_url, file, data_dir, force): Downloads and caches a url and
 line_-count(file): Returns the number of linesi n a file
 run_linear_regression_test(final_model, process_data_fm, threshold, train_data_path, test_data_path, is_test, is_ranking, return_predictions): Tests whether a linear regression model has a loss lower than a threshold
 run_linear_regression_test_optim(final_model, process_data_fm. threshold, train_data_path, test_data_path, is_test, is_ranking, return_predictions): Tests the accuracy of a linear model
-
-## Best Model
-This contains our best performing model for use when making a prediction based on the values entered on the website.
