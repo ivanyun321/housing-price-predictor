@@ -22,21 +22,39 @@ In our models we use root mean squared error as our loss function. We chose RMSE
 
 ## Helper Functions
 This is a python file that contains all the useful functions we use throughout the project.
+
 fill_missing(data, col): Fills in missing values in a column with the median value
+
 rmse(predicted, actual): Calculates the rmse of a set of predictions.
+
 process_data_pipe(data, pipeline_functions, prediction_col): Generates X, Y after processing the data through the pipeline functions paying attention to only the columns specified in prediction_col
+
 select_columns(data, columns): Selects columns from data
+
 train_val_split(data): Splits data into a train and validation set
+
 ohe_roof_material(data): One hot encodes the roof material column
+
 substitute_roof_material(data): Creates columns corresponding to different roof materials
+
 add_bedrooms(data): Adds a new column containing the number of bedrooms in a house
+
 add_total_rooms(data): Adds a new column containing total number of rooms in a house
+
 add_bathrooms(data): Adds a new column containing total number of bathrooms in a house
+
 log_transform(data, column): Adds the log of a column to the passed in dataframe with the name 'Log {column}'
+
 remove_outliers(data, variable, lower, higher): Removes outliers from a variable that are less than lower and greater than higher
+
 plot_distribution(data, label, rows): Plots the distribution of label as a histplot and a boxplot
+
 head(filename, lines): Returns the first lines of filename
+
 fetch_and_cache(data_url, file, data_dir, force): Downloads and caches a url and returns the file object
+
 line_-count(file): Returns the number of linesi n a file
+
 run_linear_regression_test(final_model, process_data_fm, threshold, train_data_path, test_data_path, is_test, is_ranking, return_predictions): Tests whether a linear regression model has a loss lower than a threshold
+
 run_linear_regression_test_optim(final_model, process_data_fm. threshold, train_data_path, test_data_path, is_test, is_ranking, return_predictions): Tests the accuracy of a linear model
